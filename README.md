@@ -2,7 +2,6 @@
 
 **Authors:** Xingyu Zhao, Yingyi Tang, and Junbo Zhao  
 **Affiliation:** Dartmouth College  
-**Last updated:** September 28, 2026  
 **Contact:** [xingyu.zhao.th@dartmouth.edu](mailto:xingyu.zhao.th@dartmouth.edu)
 
 ## Overview
@@ -50,6 +49,59 @@ Parameters retained in the ROM use the same values as in the corresponding SWM.
 - **Grid components:** Grid equivalent and voltage-dip profile.
 - **Mechanical load:** Shaft-load model for motor-driven cooling loads.
 
+## Control Methods
+
+The following table summarizes the control objectives and structures. AVM and SWM retain the explicit current loops where used; ROM replaces these fast dynamics with ideal current tracking or an algebraic current response while retaining the represented outer controls.
+
+| Module | Control method |
+| --- | --- |
+| Rectifier | **Grid-following (GFL) control.** A PLL tracks the grid angle. An outer DC-voltage PI generates the d-axis current reference, while the q-axis reference is zero. Inner dq current loops regulate the AC current. |
+| UPS inverter | **Grid-forming (GFM) control at the UPS output.** Cascaded voltage and current loops establish the protected AC voltage using an internally generated angle. A slow phase-alignment loop aligns this angle with the upstream PLL to reduce phase mismatch during transfers involving the bypass. |
+| Battery DC–DC converter | **Mode-dependent control.** Optional DC-voltage droop provides support during online operation. In battery mode, a voltage PI takes over regulation of the UPS DC link. A recovery ramp smooths the return to online operation. |
+| PFC converter | **DC-voltage regulation and input-current shaping.** The voltage PI produces a conductance command. Multiplying it by the rectified input voltage generates the current reference, targeting near-unity power factor under sinusoidal supply conditions. |
+| Buck converter | **Cascaded voltage and current control.** The voltage PI generates an inductor-current reference, and the current PI produces the duty command. A time-varying load resistance represents workload changes downstream of the regulated DC supply. |
+| VFD | **Open-loop V/F control.** The drive sets the inverter frequency from the command and adjusts voltage magnitude according to a V/F profile. Rotor speed is not fed back for speed regulation, so the actual speed depends on motor slip and mechanical loading. |
+| UPS supervisory and VRT controls | **Operating-mode selection.** Grid-voltage conditions and the ride-through logic determine mode commands; the UPS supervisor coordinates the rectifier, inverter, and bypass breakers. |
+
+The VFD's V/F profile aims to maintain approximately constant motor flux in its constant-ratio operating region. For background, see Texas Instruments' [Scalar (V/f) Control of 3-Phase Induction Motors](https://www.ti.com/lit/an/sprabq8/sprabq8.pdf).
+
+## Bandwidth-Based PI Tuning
+
+The PI-regulated loops use a second-order target to relate response speed and damping to controller gains. Instead of selecting gains independently, specify a tuning frequency $f_{\mathrm{bw}}$ in hertz and a damping ratio $\zeta$.
+
+For a first-order plant approximation and a parallel PI controller,
+
+$$
+G(s)=\frac{K}{as+b},\qquad C_{\mathrm{PI}}(s)=K_p+\frac{K_i}{s},
+$$
+
+where $a>0$ and $K>0$, negative unity feedback gives the characteristic polynomial
+
+$$
+a s^2+(b+K K_p)s+K K_i.
+$$
+
+Matching this to $a(s^2+2\zeta\omega_n s+\omega_n^2)$ gives
+
+$$
+\omega_n=2\pi f_{\mathrm{bw}},\qquad
+K_p=\frac{2\zeta\omega_n a-b}{K},\qquad
+K_i=\frac{a\omega_n^2}{K}.
+$$
+
+A higher tuning frequency gives faster target dynamics; the damping ratio sets the damping of the target poles. The coefficients $a$, $b$, and $K$ must represent the particular loop, including its per-unit scaling and operating point.
+
+For example, a capacitor voltage loop with ideal inner current tracking has $a=C_{\mathrm{pu}}/\omega_b$, $b=0$, and $K=1$, when the controller commands capacitor-side current and load current is treated as a disturbance. With physical time in seconds and $\omega_b=2\pi f_{\mathrm{base}}$,
+
+$$
+K_p=\frac{2\zeta\omega_n C_{\mathrm{pu}}}{\omega_b},\qquad
+K_i=\frac{\omega_n^2 C_{\mathrm{pu}}}{\omega_b}.
+$$
+
+Tune inner current loops first, then choose slower outer voltage loops so that the fast-current-loop approximation is reasonable. Verify the resulting response with the connected converter chain, including filters, switching delays, and limits.
+
+**Interpretation of bandwidth:** The parameter labeled “bandwidth” sets the target natural frequency through $\omega_n=2\pi f_{\mathrm{bw}}$. It is not generally equal to the measured closed-loop −3 dB bandwidth: the PI zero and additional dynamics also affect the response. ROM uses the same tuning values as SWM for every retained controller; tuning inputs for removed loops are omitted.
+
 ## Example Cases
 
 ### Case 1: Complete Data Center Model (`DC_EMT_demo`)
@@ -62,7 +114,7 @@ This case demonstrates how to use the modules in `DC_EMT_lib.pslx` to build a co
 
 The simulation sequence is as follows:
 
-1. **Initialization (t = 0–5 s):** The IT load is initialized to 0.6 pu. The cooling load, represented by an induction motor, is brought to its speed setpoint.
+1. **Initialization (t = 0–5 s):** The IT load is initialized to 0.6 pu. The cooling load, represented by an induction motor, accelerates toward steady operation under the commanded V/F profile.
 
 2. **Grid-side disturbance (t = 5 s):** A voltage dip is applied at 5 s, and the voltage begins to recover at 6.5 s. This event illustrates the responses of the data center components, particularly the UPS, to the voltage dip and recovery according to the implemented voltage ride-through logic.
 
