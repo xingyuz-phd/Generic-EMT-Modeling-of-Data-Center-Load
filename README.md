@@ -40,7 +40,7 @@ The PSCAD library, `DC_EMT_lib.pslx`, includes power electronic converters, IT l
 - **SWM:** Represents switching devices and PWM operation, including switching ripple.
 - **ROM:** Simplifies fast dynamics while retaining the outer controls and energy-storage dynamics represented by each module.
 
-Parameters retained in the ROM use the same values as in the corresponding SWM.
+Parameters retained in the ROM use the same values as in the corresponding SWM/AVM.
 
 ### Supporting Modules
 
