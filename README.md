@@ -1,4 +1,4 @@
-# Generic EMT Modeling of Data Center Load v0 (DC-EMTv0)
+# Generic EMT Modeling of Data Center Load v0 (DC_EMTv0)
 
 **Authors:** Xingyu Zhao, Yingyi Tang, and Junbo Zhao  
 **Affiliation:** Dartmouth College  
@@ -20,6 +20,10 @@ The PSCAD library, `DC_EMT_lib.pslx`, includes power electronic converters, IT l
 | `DC_EMT_compare` | Comparison of model responses at different fidelity levels |
 
 ## Component Library
+
+![DC_EMTv0 component library](dc_emt_component_library.png)
+
+*Figure 1. Power electronic modules and supporting components in `DC_EMT_lib.pslx`.*
 
 ### Power Electronic Modules
 
