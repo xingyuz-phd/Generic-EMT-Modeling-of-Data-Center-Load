@@ -2,7 +2,6 @@
 
 **Authors:** Xingyu Zhao, Yingyi Tang, and Junbo Zhao  
 **Affiliation:** Dartmouth College  
-**Last updated:** September 28, 2026  
 **Contact:** [xingyu.zhao.th@dartmouth.edu](mailto:xingyu.zhao.th@dartmouth.edu)
 
 ## Overview
