@@ -2,6 +2,7 @@
 
 **Authors:** Xingyu Zhao, Yingyi Tang, and Junbo Zhao  
 **Affiliation:** Dartmouth College  
+**Last updated:** September 28, 2026  
 **Contact:** [xingyu.zhao.th@dartmouth.edu](mailto:xingyu.zhao.th@dartmouth.edu)
 
 ## Overview
@@ -54,6 +55,12 @@ Parameters retained in the ROM use the same values as in the corresponding SWM.
 ### Case 1: Complete Data Center Model (`DC_EMT_demo`)
 
 This case demonstrates how to use the modules in `DC_EMT_lib.pslx` to build a complete data center model for power system dynamic studies. It uses average converter models and includes disturbances on both the grid and workload sides.
+
+![Example data center load model](dc_emt_data_center_example.png)
+
+*Figure 2. Example data center model with UPS-supplied IT loads, VFD-driven cooling loads, and static lighting loads.*
+
+The simulation sequence is as follows:
 
 1. **Initialization (t = 0–5 s):** The IT load is initialized to 0.6 pu. The cooling load, represented by an induction motor, is brought to its speed setpoint.
 
