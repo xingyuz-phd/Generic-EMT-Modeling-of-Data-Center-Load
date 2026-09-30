@@ -2,6 +2,8 @@
 
 **Authors:** Xingyu Zhao, Yingyi Tang, and Junbo Zhao  
 **Affiliation:** Dartmouth College  
+**PSCAD version:** 5.0.2  
+**Last updated:** September 28, 2026  
 **Contact:** [xingyu.zhao.th@dartmouth.edu](mailto:xingyu.zhao.th@dartmouth.edu)
 
 ## Overview
@@ -18,6 +20,15 @@ The PSCAD library, `DC_EMT_lib.pslx`, includes power electronic converters, IT l
 | `DC_EMT_lib.pslx` | Modular data center EMT component library |
 | `DC_EMT_demo` | Complete data center example using average converter models |
 | `DC_EMT_compare` | Comparison of model responses at different fidelity levels |
+
+## PSCAD Version and Required Settings
+
+The supplied project files use **PSCAD 5.0.2**, as shown by both the Product Version and File Version in the project settings.
+
+> [!IMPORTANT]
+> **Do not enable “Use ideal branches for resistances under”.**
+> In **Project Settings → Runtime → Network Solution Accuracy**, leave this checkbox **unchecked** before running the model.
+> Apply this setting to both `DC_EMT_demo` and `DC_EMT_compare`, and to any new project using these library modules.
 
 ## Component Library
 
@@ -40,7 +51,7 @@ The PSCAD library, `DC_EMT_lib.pslx`, includes power electronic converters, IT l
 - **SWM:** Represents switching devices and PWM operation, including switching ripple.
 - **ROM:** Simplifies fast dynamics while retaining the outer controls and energy-storage dynamics represented by each module.
 
-Parameters retained in the ROM use the same values as in the corresponding SWM/AVM.
+Parameters retained in the ROM use the same values as in the corresponding SWM.
 
 ### Supporting Modules
 
@@ -141,6 +152,25 @@ These disturbances allow the three model variants to be compared under both grid
 The cooling-load model is initialized during the first 5 s. At 5 s, the voltage-dip profile used for the IT-load comparison is applied to the cooling-load supply. This test compares the responses of the average and switching models to a grid-side disturbance.
 
 Together, these comparisons illustrate how modeling fidelity affects simulated dynamic responses and support model selection for different study objectives.
+
+## Citation
+
+If you use this model in your research, please cite the software repository:
+
+> X. Zhao, Y. Tang, and J. Zhao, *Generic EMT Modeling of Data Center Load v0 (DC_EMTv0)*, version v0, Dartmouth College, 2026. [Software]. Available: [GitHub repository](https://github.com/xingyuz-phd/Generic-EMT-Modeling-of-Data-Center-Load).
+
+### BibTeX
+
+```bibtex
+@misc{zhao2026dcemt,
+  author       = {Zhao, Xingyu and Tang, Yingyi and Zhao, Junbo},
+  title        = {Generic {EMT} Modeling of Data Center Load v0 ({DC\_EMTv0})},
+  year         = {2026},
+  howpublished = {GitHub repository},
+  url          = {https://github.com/xingyuz-phd/Generic-EMT-Modeling-of-Data-Center-Load},
+  note         = {Version v0, Dartmouth College}
+}
+```
 
 ## Contact
 
