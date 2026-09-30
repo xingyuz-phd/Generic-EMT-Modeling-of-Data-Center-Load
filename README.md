@@ -1,4 +1,4 @@
-# Generic EMT Modeling of Data Center Load v0 (DC_EMTv0)
+# Generic EMT Modeling of Data Center Load v0 (DC-EMTv0)
 
 **Authors:** Xingyu Zhao, Yingyi Tang, and Junbo Zhao  
 **Affiliation:** Dartmouth College  
