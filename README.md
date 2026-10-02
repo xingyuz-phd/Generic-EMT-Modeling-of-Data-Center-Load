@@ -3,7 +3,7 @@
 **Authors:** Xingyu Zhao, Yingyi Tang, and Junbo Zhao  
 **Affiliation:** Dartmouth College  
 **PSCAD version:** 5.0.2  
-**Last updated:** September 28, 2026  
+**Last updated:** October 2, 2026  
 **Contact:** [xingyu.zhao.th@dartmouth.edu](mailto:xingyu.zhao.th@dartmouth.edu)
 
 ## Overview
