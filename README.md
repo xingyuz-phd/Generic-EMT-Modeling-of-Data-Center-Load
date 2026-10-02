@@ -127,13 +127,25 @@ The simulation sequence is as follows:
 
 1. **Initialization (t = 0–5 s):** The IT load is initialized to 0.6 pu. The cooling load, represented by an induction motor, accelerates toward steady operation under the commanded V/F profile.
 
-2. **Grid-side disturbance (t = 5 s):** A voltage dip is applied at 5 s, and the voltage begins to recover at 6.5 s. This event illustrates the responses of the data center components, particularly the UPS, to the voltage dip and recovery according to the implemented voltage ride-through logic.
+2. **Grid-side disturbance (t = 5 s):** A voltage dip is applied at 5 s. In the result shown below, the voltage begins to recover at approximately 6 s. This event illustrates the responses of the data center components, particularly the UPS, to the voltage dip and recovery according to the implemented voltage ride-through logic.
 
 3. **Workload-side disturbance (t = 12 s onward):** A periodic square-wave variation is applied to the IT workload to represent power demand fluctuations associated with AI training tasks.
+
+#### Example Results
+
+![Case 1 simulation results](dc_emt_case1_results.png)
+
+*Figure 3. Case 1 responses: active and reactive power at the PCC, UPS input, cooling loads, and static loads, together with RMS supply voltage and UPS operating mode.*
+
+The UPS input active power falls close to zero during battery operation and ramps back up after the return to online operation. The subsequent workload changes appear in both the UPS input power and the total power at the PCC. The bottom panel shows the supply voltage and the UPS mode (0: online; 1: battery).
 
 ### Case 2: Model Fidelity Comparison (`DC_EMT_compare`)
 
 This case compares the responses of the power electronic modules in `DC_EMT_lib.pslx` at different modeling fidelity levels.
+
+![Case 2 model fidelity comparison setup](dc_emt_case2_model.png)
+
+*Figure 4. Case 2 configuration comparing AVM, SWM, and ROM representations of IT loads and AVM and SWM representations of cooling loads.*
 
 #### IT Loads
 
@@ -150,6 +162,14 @@ These disturbances allow the three model variants to be compared under both grid
 #### Cooling Loads
 
 The cooling-load model is initialized during the first 5 s. At 5 s, the voltage-dip profile used for the IT-load comparison is applied to the cooling-load supply. This test compares the responses of the average and switching models to a grid-side disturbance.
+
+#### Example Results
+
+![Case 2 simulation results](dc_emt_case2_results.png)
+
+*Figure 5. Case 2 responses. The upper three panels compare supply voltage and UPS input active and reactive power for SWM (green), AVM (blue), and ROM (red). The lower three panels compare supply voltage and cooling-load active and reactive power for SWM (green) and AVM (blue).*
+
+The IT-load models follow similar UPS input power trajectories in this example, with differences during transients and in steady operation. The cooling-load comparison also shows differences in ripple and power levels between AVM and SWM.
 
 Together, these comparisons illustrate how modeling fidelity affects simulated dynamic responses and support model selection for different study objectives.
 
