@@ -175,20 +175,22 @@ Together, these comparisons illustrate how modeling fidelity affects simulated d
 
 ## Citation
 
-If you use this model in your research, please cite the software repository:
+If you use this model in your research, please cite the following paper:
 
-> X. Zhao, Y. Tang, and J. Zhao, *Generic EMT Modeling of Data Center Load v0 (DC_EMTv0)*, version v0, Dartmouth College, 2026. [Software]. Available: [GitHub repository](https://github.com/xingyuz-phd/Generic-EMT-Modeling-of-Data-Center-Load).
+> X. Zhao, Y. Tang, and J. Zhao, “Open-Source Multi-Fidelity EMT Modeling of Data Center Loads for Power System Studies,” arXiv:2611.10179, 2026. Available: https://arxiv.org/abs/2611.10179.
 
 ### BibTeX
 
 ```bibtex
 @misc{zhao2026dcemt,
-  author       = {Zhao, Xingyu and Tang, Yingyi and Zhao, Junbo},
-  title        = {Generic {EMT} Modeling of Data Center Load v0 ({DC\_EMTv0})},
-  year         = {2026},
-  howpublished = {GitHub repository},
-  url          = {https://github.com/xingyuz-phd/Generic-EMT-Modeling-of-Data-Center-Load},
-  note         = {Version v0, Dartmouth College}
+  author        = {Zhao, Xingyu and Tang, Yingyi and Zhao, Junbo},
+  title         = {Open-Source Multi-Fidelity {EMT} Modeling of Data Center Loads for Power System Studies},
+  year          = {2026},
+  eprint        = {2611.10179},
+  archivePrefix = {arXiv},
+  primaryClass  = {eess.SY},
+  doi           = {10.48550/arXiv.2611.10179},
+  url           = {https://arxiv.org/abs/2611.10179}
 }
 ```
 
